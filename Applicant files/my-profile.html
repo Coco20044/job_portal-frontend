@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="my-profile.css">
+    <script src="my-profile.js" defer></script>
+    <title>My Profile | Job Portal</title>
+</head>
+<body>
+    <div class="dashboard-container">
+
+        <aside class="sidebar">
+
+            <a href="job-seeker-dashboard.html" class="logo">
+
+                <span class="logo-icon">J</span>
+
+                <span>JobPortal</span>
+
+            </a>
+
+            <div class="sidebar-menu">
+
+                <p class="menu-heading">MENU</p>
+
+                <a href="job-seeker-dashboard.html" class="nav-link">
+
+                    <span>▦</span>
+
+                    Dashboard
+
+                </a>
+
+                <a href="job-listings.html" class="nav-link">
+
+                    <span>⌕</span>
+
+                    Browse Jobs
+
+                </a>
+
+                <a href="my-applications.html" class="nav-link">
+
+                    <span>▤</span>
+
+                    My Applications
+
+                </a>
+
+                <a href="my-profile.html" class="nav-link active">
+
+                    <span>♙</span>
+
+                    My Profile
+
+                </a>
+
+            </div>
+
+            <div class="sidebar-bottom">
+
+                <a href="settings.html" class="nav-link">
+
+                    <span>⚙</span>
+
+                    Settings
+
+                </a>
+
+                <a href="index.html" class="nav-link logout-link" id="logoutButton">
+
+                    <span>↪</span>
+
+                    Logout
+
+                </a>
+
+            </div>
+
+        </aside>
+
+        <main class="main-content">
+
+            <header class="top-header">
+
+                <div class="page-title">
+
+                    <h1>My Profile</h1>
+
+                    <p>Manage your professional identity and career information.</p>
+
+                </div>
+
+                <div class="header-actions">
+
+                    <button class="notification-button" aria-label="Notifications">
+
+                        ♧
+
+                        <span class="notification-dot"></span>
+
+                    </button>
+
+                    <div class="user-profile">
+
+                        <div class="user-avatar" id="userAvatar">C</div>
+
+                        <div class="user-details">
+
+                            <h4 id="userName">Cynthia Vincent</h4>
+
+                            <p>Job Seeker</p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </header>
+
+            <section class="profile-overview">
+
+                <div class="profile-cover"></div>
+
+                <div class="profile-summary">
+
+                    <div class="profile-avatar" id="profileAvatar">
+
+                        C
+
+                    </div>
+
+                    <div class="profile-identity">
+
+                        <h2 id="profileDisplayName">Cynthia Vincent</h2>
+
+                        <p id="profileHeadline">Aspiring Software Developer</p>
+
+                        <div class="profile-location">
+
+                            <span>⌖</span>
+
+                            <span id="profileLocation">Nigeria</span>
+
+                        </div>
+
+                    </div>
+
+                    <div class="profile-completion">
+
+                        <p>Profile Completion</p>
+
+                        <h3 id="completionPercentage">0%</h3>
+
+                        <div class="completion-track">
+
+                            <div class="completion-progress" id="completionProgress"></div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+            <div class="profile-layout">
+
+                <section class="profile-main">
+
+                    <!-- PERSONAL INFORMATION -->
+
+                    <div class="profile-card">
+
+                        <div class="card-heading">
+
+                            <div>
+
+                                <h2>Personal Information</h2>
+
+                                <p>Update your basic contact and profile details.</p>
+
+                            </div>
+
+                        </div>
+
+                        <form id="profileForm">
+
+                            <div class="form-grid">
+
+                                <div class="form-group">
+
+                                    <label for="firstName">First Name</label>
+
+                                    <input type="text" id="firstName" placeholder="Enter first name">
+
+                                </div>
+
+                                <div class="form-group">
+
+                                    <label for="lastName">Last Name</label>
+
+                                    <input type="text" id="lastName" placeholder="Enter last name">
+
+                                </div>
+
+                                <div class="form-group">
+
+                                    <label for="profileEmail">Email Address</label>
+
+                                    <input type="email" id="profileEmail" placeholder="Enter email address">
+
+                                </div>
+
+                                <div class="form-group">
+
+                                    <label for="phone">Phone Number</label>
+
+                                    <input type="tel" id="phone" placeholder="Enter phone number">
+
+                                </div>
+
+                                <div class="form-group">
+
+                                    <label for="location">Location</label>
+
+                                    <input type="text" id="location" placeholder="City, Country">
+
+                                </div>
+
+                                <div class="form-group">
+
+                                    <label for="headline">Professional Headline</label>
+
+                                    <input type="text" id="headline" placeholder="e.g. Junior Backend Developer">
+
+                                </div>
+
+                            </div>
+
+                            <div class="form-group full-width">
+
+                                <label for="bio">Professional Summary</label>
+
+                                <textarea
+
+                                    id="bio"
+
+                                    rows="5"
+
+                                    placeholder="Tell employers about yourself, your experience, and your career goals..."
+
+                                ></textarea>
+
+                            </div>
+
+                            <p class="form-message" id="profileMessage"></p>
+
+                            <button type="submit" class="save-button">
+
+                                Save Personal Information
+
+                            </button>
+
+                        </form>
+
+                    </div>
+
+                    <!-- SKILLS -->
+
+                    <div class="profile-card">
+
+                        <div class="card-heading">
+
+                            <div>
+
+                                <h2>Skills</h2>
+
+                                <p>Highlight the skills you bring to potential employers.</p>
+
+                            </div>
+
+                        </div>
+
+                        <form id="skillsForm">
+
+                            <div class="form-group">
+
+                                <label for="skills">Your Skills</label>
+
+                                <input
+
+                                    type="text"
+
+                                    id="skills"
+
+                                    placeholder="e.g. Python, JavaScript, SQL, HTML, CSS"
+
+                                >
+
+                                <small>Separate each skill with a comma.</small>
+
+                            </div>
+
+                            <div class="skills-preview" id="skillsPreview"></div>
+
+                            <button type="submit" class="save-button">
+
+                                Save Skills
+
+                            </button>
+
+                        </form>
+
+                    </div>
+
+                    <!-- EDUCATION -->
+
+                    <div class="profile-card">
+
+                        <div class="card-heading">
+
+                            <div>
+
+                                <h2>Education</h2>
+
+                                <p>Add your academic background.</p>
+
+                            </div>
+
+                        </div>
+
+                        <form id="educationForm">
+
+                            <div class="form-grid">
+
+                                <div class="form-group">
+
+                                    <label for="school">Institution</label>
+
+                                    <input type="text" id="school" placeholder="University or institution">
+
+                                </div>
+
+                                <div class="form-group">
+
+                                    <label for="degree">Degree / Qualification</label>
+
+                                    <input type="text" id="degree" placeholder="e.g. B.Sc. Computer Science">
+
+                                </div>
+
+                                <div class="form-group">
+
+                                    <label for="fieldOfStudy">Field of Study</label>
+
+                                    <input type="text" id="fieldOfStudy" placeholder="e.g. Computer Science">
+
+                                </div>
+
+                                <div class="form-group">
+
+                                    <label for="graduationYear">Graduation Year</label>
+
+                                    <input type="number" id="graduationYear" placeholder="e.g. 2027">
+
+                                </div>
+
+                            </div>
+
+                            <button type="submit" class="save-button">
+
+                                Save Education
+
+                            </button>
+
+                        </form>
+
+                    </div>
+
+                    <!-- EXPERIENCE -->
+
+                    <div class="profile-card">
+
+                        <div class="card-heading">
+
+                            <div>
+
+                                <h2>Work Experience</h2>
+
+                                <p>Show employers your previous roles and experience.</p>
+
+                            </div>
+
+                        </div>
+
+                        <form id="experienceForm">
+
+                            <div class="form-grid">
+
+                                <div class="form-group">
+
+                                    <label for="jobTitle">Job Title</label>
+
+                                    <input type="text" id="jobTitle" placeholder="e.g. Software Engineering Intern">
+
+                                </div>
+
+                                <div class="form-group">
+
+                                    <label for="company">Company</label>
+
+                                    <input type="text" id="company" placeholder="Company name">
+
+                                </div>
+
+                                <div class="form-group">
+
+                                    <label for="startDate">Start Date</label>
+
+                                    <input type="month" id="startDate">
+
+                                </div>
+
+                                <div class="form-group">
+
+                                    <label for="endDate">End Date</label>
+
+                                    <input type="month" id="endDate">
+
+                                </div>
+
+                            </div>
+
+                            <div class="form-group full-width">
+
+                                <label for="experienceDescription">Description</label>
+
+                                <textarea
+
+                                    id="experienceDescription"
+
+                                    rows="4"
+
+                                    placeholder="Describe your responsibilities and achievements..."
+
+                                ></textarea>
+
+                            </div>
+
+                            <button type="submit" class="save-button">
+
+                                Save Experience
+
+                            </button>
+
+                        </form>
+
+                    </div>
+
+                </section>
+
+                <!-- PROFILE SIDEBAR -->
+
+                <aside class="profile-sidebar">
+
+                    <div class="profile-card quick-info">
+
+                        <h3>Profile Tips</h3>
+
+                        <p>Make your profile stand out to employers.</p>
+
+                        <ul>
+
+                            <li>Use a clear professional headline.</li>
+
+                            <li>Write a strong professional summary.</li>
+
+                            <li>List relevant technical and soft skills.</li>
+
+                            <li>Keep your education information updated.</li>
+
+                            <li>Highlight projects and work experience.</li>
+
+                        </ul>
+
+                    </div>
+
+                    <div class="profile-card profile-status">
+
+                        <h3>Profile Visibility</h3>
+
+                        <p>Your profile helps employers understand your qualifications.</p>
+
+                        <span class="visibility-badge">
+
+                            <span></span>
+
+                            Visible to employers
+
+                        </span>
+
+                    </div>
+
+                </aside>
+
+            </div>
+
+        </main>
+
+    </div>
+</body>
+</html>

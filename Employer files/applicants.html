@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Applicants | Job Portal</title>
+    <script src="theme.js" defer></script>
+    <link rel="stylesheet" href="applicants.css">
+    <script src="applicants.js" defer></script>
+</head>
+<body>
+  <div class="dashboard-container">
+
+        <!-- SIDEBAR -->
+
+        <aside class="sidebar">
+
+            <div class="logo">
+
+                <h2>Job<span>Portal</span></h2>
+
+            </div>
+
+            <div class="sidebar-user">
+
+                <div class="user-avatar" id="userAvatar">E</div>
+
+                <div>
+
+                    <h3 id="userName">Employer</h3>
+
+                    <p>Employer Account</p>
+
+                </div>
+
+            </div>
+
+            <nav class="sidebar-nav">
+
+                <a href="employer-dashboard.html" class="nav-link">
+
+                    <span>▦</span>
+
+                    Dashboard
+
+                </a>
+
+                <a href="my-job-posts.html" class="nav-link">
+
+                    <span>▤</span>
+
+                    My Job Posts
+
+                </a>
+
+                <a href="applicants.html" class="nav-link active">
+
+                    <span>♙</span>
+
+                    Applicants
+
+                </a>
+
+                <a href="post-job.html" class="nav-link">
+
+                    <span>＋</span>
+
+                    Post a Job
+
+                </a>
+
+                <a href="employer-settings.html" class="nav-link">
+
+                    <span>⚙</span>
+
+                    Settings
+
+                </a>
+
+            </nav>
+
+            <div class="sidebar-bottom">
+
+                <a href="index.html" class="nav-link" id="logoutButton">
+
+                    <span>↪</span>
+
+                    Logout
+
+                </a>
+
+            </div>
+
+        </aside>
+
+        <!-- MAIN CONTENT -->
+
+        <main class="main-content">
+
+            <!-- PAGE HEADER -->
+
+            <header class="top-header">
+
+                <div>
+
+                    <h1>Applicants</h1>
+
+                    <p>Review and manage candidates who applied to your jobs.</p>
+
+                </div>
+
+            </header>
+
+            <!-- STATISTICS -->
+
+            <section class="stats-grid">
+
+                <div class="stat-card">
+
+                    <div class="stat-icon blue">♙</div>
+
+                    <div>
+
+                        <p>Total Applicants</p>
+
+                        <h2 id="totalApplicants">0</h2>
+
+                    </div>
+
+                </div>
+
+                <div class="stat-card">
+
+                    <div class="stat-icon orange">◷</div>
+
+                    <div>
+
+                        <p>Pending Review</p>
+
+                        <h2 id="pendingApplicants">0</h2>
+
+                    </div>
+
+                </div>
+
+                <div class="stat-card">
+
+                    <div class="stat-icon green">✓</div>
+
+                    <div>
+
+                        <p>Shortlisted</p>
+
+                        <h2 id="shortlistedApplicants">0</h2>
+
+                    </div>
+
+                </div>
+
+                <div class="stat-card">
+
+                    <div class="stat-icon purple">★</div>
+
+                    <div>
+
+                        <p>Interview Stage</p>
+
+                        <h2 id="interviewApplicants">0</h2>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+            <!-- APPLICANTS SECTION -->
+
+            <section class="applicants-section">
+
+                <div class="section-heading">
+
+                    <div>
+
+                        <h2>All Applicants</h2>
+
+                        <p>Manage applications submitted to your job posts.</p>
+
+                    </div>
+
+                </div>
+
+                <!-- SEARCH AND FILTERS -->
+
+                <div class="applicants-toolbar">
+
+                    <div class="search-box">
+
+                        <span>⌕</span>
+
+                        <input
+
+                            type="text"
+
+                            id="applicantSearch"
+
+                            placeholder="Search by applicant name or job title..."
+
+                        >
+
+                    </div>
+
+                    <select id="jobFilter">
+
+                        <option value="all">All Job Posts</option>
+
+                    </select>
+
+                    <select id="statusFilter">
+
+                        <option value="all">All Statuses</option>
+
+                        <option value="pending">Pending</option>
+
+                        <option value="shortlisted">Shortlisted</option>
+
+                        <option value="interview">Interview</option>
+
+                        <option value="rejected">Rejected</option>
+
+                    </select>
+
+                </div>
+
+                <!-- APPLICANTS LIST -->
+
+                <div class="applicants-container" id="applicantsContainer">
+
+                    <!-- APPLICANT CARDS WILL BE GENERATED WITH JAVASCRIPT -->
+
+                </div>
+
+                <!-- EMPTY STATE -->
+
+                <div class="empty-state" id="emptyState" style="display: none;">
+
+                    <div class="empty-icon">♙</div>
+
+                    <h3>No Applicants Found</h3>
+
+                    <p>
+
+                        There are no applications matching your current search
+
+                        or filter.
+
+                    </p>
+
+                </div>
+
+            </section>
+
+        </main>
+
+    </div>  
+</body>
+</html>

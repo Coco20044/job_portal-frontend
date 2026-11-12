@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Admin Dashboard | Job Portal</title>
+
+    <link rel="stylesheet" href="admin-dashboard.css">
+
+    <script src="../theme.js"></script>
+
+</head>
+
+<body>
+
+    <div class="dashboard-container">
+
+        <aside class="sidebar">
+
+            <div class="sidebar-header">
+
+                <h2>JobPortal</h2>
+
+                <span>Administration</span>
+
+            </div>
+
+            <nav class="sidebar-nav">
+
+                <a href="#overview" class="nav-link active" data-section="overview">Overview</a>
+
+                <a href="#users" class="nav-link" data-section="users">Users</a>
+
+                <a href="#jobs" class="nav-link" data-section="jobs">Jobs</a>
+
+            </nav>
+
+            <div class="sidebar-bottom">
+
+                <button id="themeToggle">Toggle Theme</button>
+
+                <button id="logoutButton">Log Out</button>
+
+            </div>
+
+        </aside>
+
+        <main class="main-content">
+
+            <header class="topbar">
+
+                <div>
+
+                    <h1 id="pageTitle">Dashboard Overview</h1>
+
+                    <p>Manage your job portal platform.</p>
+
+                </div>
+
+                <div class="admin-info">
+
+                    <span id="adminName">Administrator</span>
+
+                    <span id="adminEmail"></span>
+
+                </div>
+
+            </header>
+
+            <section id="overviewSection" class="dashboard-section active">
+
+                <div class="section-heading">
+
+                    <h2>Platform Overview</h2>
+
+                    <p>Here's what's happening on your platform.</p>
+
+                </div>
+
+                <div class="stats-grid">
+
+                    <div class="stat-card">
+
+                        <span>Total Users</span>
+
+                        <h3 id="totalUsers">0</h3>
+
+                    </div>
+
+                    <div class="stat-card">
+
+                        <span>Job Seekers</span>
+
+                        <h3 id="totalJobSeekers">0</h3>
+
+                    </div>
+
+                    <div class="stat-card">
+
+                        <span>Employers</span>
+
+                        <h3 id="totalEmployers">0</h3>
+
+                    </div>
+
+                    <div class="stat-card">
+
+                        <span>Total Jobs</span>
+
+                        <h3 id="totalJobs">0</h3>
+
+                    </div>
+
+                    <div class="stat-card">
+
+                        <span>Open Jobs</span>
+
+                        <h3 id="openJobs">0</h3>
+
+                    </div>
+
+                    <div class="stat-card">
+
+                        <span>Closed Jobs</span>
+
+                        <h3 id="closedJobs">0</h3>
+
+                    </div>
+
+                    <div class="stat-card">
+
+                        <span>Archived Jobs</span>
+
+                        <h3 id="archivedJobs">0</h3>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+            <section id="usersSection" class="dashboard-section">
+
+                <div class="section-heading">
+
+                    <h2>User Management</h2>
+
+                    <p>View all registered users on the platform.</p>
+
+                </div>
+
+                <div class="table-container">
+
+                    <table>
+
+                        <thead>
+
+                            <tr>
+
+                                <th>Name</th>
+
+                                <th>Email</th>
+
+                                <th>Role</th>
+
+                                <th>Registered</th>
+
+                            </tr>
+
+                        </thead>
+
+                        <tbody id="usersTableBody">
+
+                            <tr>
+
+                                <td colspan="4">Loading users...</td>
+
+                            </tr>
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </section>
+
+            <section id="jobsSection" class="dashboard-section">
+
+                <div class="section-heading">
+
+                    <h2>Job Management</h2>
+
+                    <p>View and manage all job listings.</p>
+
+                </div>
+
+                <div class="jobs-toolbar">
+
+                    <input type="search" id="jobSearch" placeholder="Search jobs or companies">
+
+                    <select id="jobStatusFilter">
+
+                        <option value="all">All Statuses</option>
+
+                        <option value="open">Open</option>
+
+                        <option value="closed">Closed</option>
+
+                        <option value="archived">Archived</option>
+
+                    </select>
+
+                </div>
+
+                <div class="table-container">
+
+                    <table>
+
+                        <thead>
+
+                            <tr>
+
+                                <th>Job Title</th>
+
+                                <th>Company</th>
+
+                                <th>Location</th>
+
+                                <th>Employer ID</th>
+
+                                <th>Status</th>
+
+                                <th>Posted</th>
+
+                                <th>Action</th>
+
+                            </tr>
+
+                        </thead>
+
+                        <tbody id="jobsTableBody">
+
+                            <tr>
+
+                                <td colspan="7">Loading jobs...</td>
+
+                            </tr>
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </section>
+
+        </main>
+
+    </div>
+
+    <script src="admin-dashboard.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Job-Posts | Job Portal</title>
+    <script src="theme.js" defer></script>
+    <link rel="stylesheet" href="my-job-posts.css">
+    <script src="my-job-posts.js" defer></script>
+</head>
+<body>
+    <div class="dashboard-container">
+
+        <!-- SIDEBAR -->
+
+        <aside class="sidebar">
+
+            <div class="logo">
+
+                <h2>Job<span>Portal</span></h2>
+
+            </div>
+
+            <div class="sidebar-user">
+
+                <div class="user-avatar" id="userAvatar">E</div>
+
+                <div>
+
+                    <h3 id="userName">Employer</h3>
+
+                    <p>Employer Account</p>
+
+                </div>
+
+            </div>
+
+            <nav class="sidebar-nav">
+
+                <a href="employer-dashboard.html" class="nav-link">
+
+                    <span>▦</span>
+
+                    Dashboard
+
+                </a>
+
+                <a href="my-job-posts.html" class="nav-link active">
+
+                    <span>▤</span>
+
+                    My Job Posts
+
+                </a>
+
+                <a href="applicants.html" class="nav-link">
+
+                    <span>♙</span>
+
+                    Applicants
+
+                </a>
+
+                <a href="post-job.html" class="nav-link">
+
+                    <span>＋</span>
+
+                    Post a Job
+
+                </a>
+
+                <a href="employer-settings.html" class="nav-link">
+
+                    <span>⚙</span>
+
+                    Settings
+
+                </a>
+
+            </nav>
+
+            <div class="sidebar-bottom">
+
+                <a href="index.html" class="nav-link" id="logoutButton">
+
+                    <span>↪</span>
+
+                    Logout
+
+                </a>
+
+            </div>
+
+        </aside>
+
+        <!-- MAIN CONTENT -->
+
+        <main class="main-content">
+
+            <!-- HEADER -->
+
+            <header class="top-header">
+
+                <div>
+
+                    <h1>My Job Posts</h1>
+
+                    <p>Manage and track all the jobs you've published.</p>
+
+                </div>
+
+                <a href="post-job.html" class="post-job-button">
+
+                    + Post a Job
+
+                </a>
+
+            </header>
+
+            <!-- STATISTICS -->
+
+            <section class="stats-grid">
+
+                <div class="stat-card">
+
+                    <div class="stat-icon blue">▤</div>
+
+                    <div>
+
+                        <p>Total Job Posts</p>
+
+                        <h2 id="totalJobs">0</h2>
+
+                    </div>
+
+                </div>
+
+                <div class="stat-card">
+
+                    <div class="stat-icon green">✓</div>
+
+                    <div>
+
+                        <p>Active Jobs</p>
+
+                        <h2 id="activeJobs">0</h2>
+
+                    </div>
+
+                </div>
+
+                <div class="stat-card">
+
+                    <div class="stat-icon orange">◷</div>
+
+                    <div>
+
+                        <p>Draft Jobs</p>
+
+                        <h2 id="draftJobs">0</h2>
+
+                    </div>
+
+                </div>
+
+                <div class="stat-card">
+
+                    <div class="stat-icon red">■</div>
+
+                    <div>
+
+                        <p>Closed Jobs</p>
+
+                        <h2 id="closedJobs">0</h2>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+            <!-- JOB MANAGEMENT -->
+
+            <section class="jobs-section">
+
+                <div class="section-heading">
+
+                    <div>
+
+                        <h2>All Job Listings</h2>
+
+                        <p>View and manage your job opportunities.</p>
+
+                    </div>
+
+                </div>
+
+                <!-- SEARCH AND FILTERS -->
+
+                <div class="jobs-toolbar">
+
+                    <div class="search-box">
+
+                        <span>⌕</span>
+
+                        <input
+
+                            type="text"
+
+                            id="jobSearch"
+
+                            placeholder="Search job title or location..."
+
+                        >
+
+                    </div>
+
+                    <select id="statusFilter">
+
+                        <option value="all">All Statuses</option>
+
+                        <option value="active">Active</option>
+
+                        <option value="draft">Draft</option>
+
+                        <option value="closed">Closed</option>
+
+                        <option value="expired">Expired</option>
+
+                    </select>
+
+                    <select id="typeFilter">
+
+                        <option value="all">All Job Types</option>
+
+                        <option value="Full-time">Full-time</option>
+
+                        <option value="Part-time">Part-time</option>
+
+                        <option value="Internship">Internship</option>
+
+                        <option value="Contract">Contract</option>
+
+                        <option value="Remote">Remote</option>
+
+                    </select>
+
+                </div>
+
+                <!-- JOB LISTINGS -->
+
+                <div class="jobs-container" id="jobsContainer">
+
+                    <!-- JOB CARDS WILL BE GENERATED WITH JAVASCRIPT -->
+
+                </div>
+
+                <!-- EMPTY STATE -->
+
+                <div class="empty-state" id="emptyState" style="display: none;">
+
+                    <div class="empty-icon">▤</div>
+
+                    <h3>No Job Posts Found</h3>
+
+                    <p>
+
+                        You haven't posted any jobs yet, or no jobs match
+
+                        your search.
+
+                    </p>
+
+                    <a href="post-job.html" class="post-job-button">
+
+                        Post Your First Job
+
+                    </a>
+
+                </div>
+
+            </section>
+
+        </main>
+
+    </div>
+</body>
+</html>
