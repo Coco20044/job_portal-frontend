@@ -38,7 +38,7 @@ overflow: hidden;
 box-shadow: 0 20px 60px rgba(25, 45, 85, 0.12);
 }
 .signup-section {
-background: var(--primary);
+background: rgb(58, 58, 133);
 color: var(--white);
 padding: 45px 55px;
 display: flex;
