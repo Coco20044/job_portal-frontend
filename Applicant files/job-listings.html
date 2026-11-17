@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Browse Jobs | JobPortal</title>
     <link rel="stylesheet" href="job-listings.css">
     <script src="job-listings.js" defer></script>
 </head>
@@ -11,348 +11,230 @@
     <div class="dashboard-container">
         <aside class="sidebar">
 
+            <input type="checkbox" id="mobileMenuToggle" class="mobile-menu-toggle">
+
             <a href="job-seeker-dashboard.html" class="logo">
-
                 <span class="logo-icon">J</span>
-
                 <span>JobPortal</span>
-
             </a>
 
-            <div class="sidebar-menu">
+            <label for="mobileMenuToggle" class="menu-toggle-button" aria-label="Toggle navigation">
+                <span></span>
+                <span></span>
+                <span></span>
+            </label>
 
-                <p class="menu-heading">MENU</p>
+            <div class="mobile-menu">
+                <div class="sidebar-menu">
+                    <p class="menu-heading">MENU</p>
 
-                <a href="job-seeker-dashboard.html" class="nav-link">
+                    <a href="job-seeker-dashboard.html" class="nav-link">
+                        <span>▦</span>
+                        Dashboard
+                    </a>
 
-                    <span>▦</span>
+                    <a href="job-listings.html" class="nav-link active">
+                        <span>⌕</span>
+                        Browse Jobs
+                    </a>
 
-                    Dashboard
+                    <a href="my-applications.html" class="nav-link">
+                        <span>▤</span>
+                        My Applications
+                    </a>
 
-                </a>
+                    <a href="job-seeker-dashboard.html#profile" class="nav-link">
+                        <span>♙</span>
+                        My Profile
+                    </a>
+                </div>
 
-                <a href="job-listings.html" class="nav-link active">
+                <div class="sidebar-bottom">
+                    <a href="job-seeker-dashboard.html#settings" class="nav-link">
+                        <span>⚙</span>
+                        Settings
+                    </a>
 
-                    <span>⌕</span>
-
-                    Browse Jobs
-
-                </a>
-
-                <a href="my-applications.html" class="nav-link">
-
-                    <span>▤</span>
-
-                    My Applications
-
-                </a>
-
-                <a href="job-seeker-dashboard.html#profile" class="nav-link">
-
-                    <span>♙</span>
-
-                    My Profile
-
-                </a>
-
+                    <a href="index.html" class="nav-link logout-link" id="logoutButton">
+                        <span>↪</span>
+                        Logout
+                    </a>
+                </div>
             </div>
+        </aside>
 
-            <div class="sidebar-bottom">
-
-                <a href="job-seeker-dashboard.html#settings" class="nav-link">
-
-                    <span>⚙</span>
-
-                    Settings
-
-                </a>
-
-                <a href="index.html" class="nav-link logout-link" id="logoutButton">
-
-                    <span>↪</span>
-
-                    Logout
-
-                </a>
-
-            </div>
-
-        </aside>        
         <main class="main-content">
             <header class="top-header">
-
                 <div class="page-title">
-
                     <h1>Find Your Next Opportunity</h1>
-
                     <p>Explore opportunities that match your skills and career goals.</p>
-
                 </div>
 
                 <div class="header-actions">
-
                     <button class="notification-button" aria-label="Notifications">
-
                         ♧
-
                         <span class="notification-dot"></span>
-
                     </button>
 
                     <div class="user-profile">
-
                         <div class="user-avatar" id="userAvatar">C</div>
-
                         <div class="user-details">
-
                             <h4 id="userName">Cynthia Vincent</h4>
-
                             <p>Job Seeker</p>
-
                         </div>
-
                     </div>
-
                 </div>
-
             </header>
+
             <section class="search-section">
-
                 <div class="search-heading">
-
                     <h2>Find the right job for you</h2>
-
                     <p>Search thousands of opportunities and take the next step.</p>
-
                 </div>
 
                 <form class="search-form" id="jobSearchForm">
-
                     <div class="search-input">
-
                         <span>⌕</span>
-
                         <input
-
                             type="text"
-
                             id="searchKeyword"
-
                             placeholder="Job title, skills or company"
-
                         >
-
                     </div>
 
                     <div class="search-input">
-
                         <span>⌖</span>
-
                         <input
-
                             type="text"
-
                             id="searchLocation"
-
                             placeholder="Location or Remote"
-
                         >
-
                     </div>
 
                     <button type="submit" class="search-button">
-
                         Search Jobs
-
                     </button>
-
                 </form>
-
             </section>
+
             <div class="jobs-layout">
                 <aside class="filters-panel">
-
                     <div class="filter-header">
-
                         <h2>Filters</h2>
-
                         <button type="button" id="clearFilters">Clear all</button>
-
                     </div>
 
                     <div class="filter-group">
                         <h3>Employment Type</h3>
 
                         <label>
-
                             <input type="checkbox" name="employmentType" value="Full-time">
-
                             Full-time
-
                         </label>
 
                         <label>
-
                             <input type="checkbox" name="employmentType" value="Part-time">
-
                             Part-time
-
                         </label>
 
                         <label>
-
                             <input type="checkbox" name="employmentType" value="Internship">
-
                             Internship
-
                         </label>
 
                         <label>
-
                             <input type="checkbox" name="employmentType" value="Contract">
-
                             Contract
-
                         </label>
-
                     </div>
 
                     <div class="filter-group">
-
                         <h3>Work Location</h3>
 
                         <label>
-
                             <input type="checkbox" name="workLocation" value="Remote">
-
                             Remote
-
                         </label>
 
                         <label>
-
                             <input type="checkbox" name="workLocation" value="On-site">
-
                             On-site
-
                         </label>
 
                         <label>
-
                             <input type="checkbox" name="workLocation" value="Hybrid">
-
                             Hybrid
-
                         </label>
-
                     </div>
 
                     <div class="filter-group">
-
                         <h3>Experience Level</h3>
 
                         <label>
-
                             <input type="checkbox" name="experienceLevel" value="Entry-level">
-
                             Entry-level
-
                         </label>
 
                         <label>
-
                             <input type="checkbox" name="experienceLevel" value="Junior">
-
                             Junior
-
                         </label>
 
                         <label>
-
                             <input type="checkbox" name="experienceLevel" value="Internship">
-
                             Internship
-
                         </label>
-
                     </div>
 
                     <div class="filter-group">
-
                         <h3>Salary</h3>
 
                         <select id="salaryFilter">
-
                             <option value="">Any salary</option>
-
                             <option value="50000">₦50,000 and above</option>
-
                             <option value="100000">₦100,000 and above</option>
-
                             <option value="200000">₦200,000 and above</option>
-
                         </select>
-
                     </div>
 
                     <button type="button" class="apply-filters" id="applyFilters">
-
                         Apply Filters
-
                     </button>
-
                 </aside>
+
                 <section class="jobs-content">
-
                     <div class="jobs-header">
-
                         <div>
-
                             <h2>Available Jobs</h2>
-
                             <p id="jobsCount">Showing available opportunities</p>
-
                         </div>
 
                         <div class="sort-container">
-
                             <label for="sortJobs">Sort by:</label>
 
                             <select id="sortJobs">
-
                                 <option value="newest">Newest</option>
-
                                 <option value="oldest">Oldest</option>
-
                                 <option value="salary-high">Highest Salary</option>
-
                                 <option value="salary-low">Lowest Salary</option>
-
                             </select>
-
                         </div>
-
                     </div>
-                    <div class="jobs-list" id="jobsList">
-                         </div>
+
+                    <div class="jobs-list" id="jobsList"></div>
+
                     <div class="empty-state" id="emptyState" hidden>
-
                         <div class="empty-icon">⌕</div>
-
                         <h3>No jobs found</h3>
-
                         <p>Try changing your search or filters to find more opportunities.</p>
 
-                        <button type="button" id="resetSearch">Reset Search</button>
-
+                        <button type="button" id="resetSearch">
+                            Reset Search
+                        </button>
                     </div>
-
                 </section>
-
             </div>
-
         </main>
-
     </div>
 </body>
 </html>

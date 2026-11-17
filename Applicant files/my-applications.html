@@ -8,264 +8,166 @@
     <script src="my-applications.js" defer></script>
 </head>
 <body>
-     <div class="dashboard-container">
-
+    <div class="dashboard-container">
         <aside class="sidebar">
+            <input type="checkbox" id="mobileMenuToggle" class="mobile-menu-toggle">
 
             <a href="job-seeker-dashboard.html" class="logo">
-
                 <span class="logo-icon">J</span>
-
                 <span>JobPortal</span>
-
             </a>
 
-            <div class="sidebar-menu">
+            <label for="mobileMenuToggle" class="menu-toggle-button" aria-label="Toggle navigation">
+                <span></span>
+                <span></span>
+                <span></span>
+            </label>
 
-                <p class="menu-heading">MENU</p>
+            <div class="mobile-menu">
+                <div class="sidebar-menu">
+                    <p class="menu-heading">MENU</p>
 
-                <a href="job-seeker-dashboard.html" class="nav-link">
+                    <a href="job-seeker-dashboard.html" class="nav-link">
+                        <span>▦</span>
+                        Dashboard
+                    </a>
 
-                    <span>▦</span>
+                    <a href="job-listings.html" class="nav-link">
+                        <span>⌕</span>
+                        Browse Jobs
+                    </a>
 
-                    Dashboard
+                    <a href="my-applications.html" class="nav-link active">
+                        <span>▤</span>
+                        My Applications
+                    </a>
 
-                </a>
+                    <a href="my-profile.html" class="nav-link">
+                        <span>♙</span>
+                        My Profile
+                    </a>
+                </div>
 
-                <a href="job-listings.html" class="nav-link">
+                <div class="sidebar-bottom">
+                    <a href="settings.html" class="nav-link">
+                        <span>⚙</span>
+                        Settings
+                    </a>
 
-                    <span>⌕</span>
-
-                    Browse Jobs
-
-                </a>
-
-                <a href="my-applications.html" class="nav-link active">
-
-                    <span>▤</span>
-
-                    My Applications
-
-                </a>
-
-                <a href="my-profile.html" class="nav-link">
-
-                    <span>♙</span>
-
-                    My Profile
-
-                </a>
-
+                    <a href="index.html" class="nav-link logout-link" id="logoutButton">
+                        <span>↪</span>
+                        Logout
+                    </a>
+                </div>
             </div>
-
-            <div class="sidebar-bottom">
-
-                <a href="settings.html" class="nav-link">
-
-                    <span>⚙</span>
-
-                    Settings
-
-                </a>
-
-                <a href="index.html" class="nav-link logout-link" id="logoutButton">
-
-                    <span>↪</span>
-
-                    Logout
-
-                </a>
-
-            </div>
-
         </aside>
 
         <main class="main-content">
-
             <header class="top-header">
-
                 <div class="page-title">
-
                     <h1>My Applications</h1>
-
                     <p>Track and manage the jobs you've applied for.</p>
-
                 </div>
 
                 <div class="header-actions">
-
                     <button class="notification-button" aria-label="Notifications">
-
                         ♧
-
                         <span class="notification-dot"></span>
-
                     </button>
 
                     <div class="user-profile">
-
                         <div class="user-avatar" id="userAvatar">C</div>
-
                         <div class="user-details">
-
                             <h4 id="userName">Cynthia Vincent</h4>
-
                             <p>Job Seeker</p>
-
                         </div>
-
                     </div>
-
                 </div>
-
             </header>
 
             <section class="application-overview">
-
                 <div class="overview-card">
-
                     <div class="overview-icon total-icon">▤</div>
-
                     <div>
-
                         <p>Total Applications</p>
-
                         <h2 id="totalApplications">0</h2>
-
                     </div>
-
                 </div>
 
                 <div class="overview-card">
-
                     <div class="overview-icon pending-icon">◷</div>
-
                     <div>
-
                         <p>Pending</p>
-
                         <h2 id="pendingApplications">0</h2>
-
                     </div>
-
                 </div>
 
                 <div class="overview-card">
-
                     <div class="overview-icon interview-icon">✓</div>
-
                     <div>
-
                         <p>Interview</p>
-
                         <h2 id="interviewApplications">0</h2>
-
                     </div>
-
                 </div>
 
                 <div class="overview-card">
-
                     <div class="overview-icon rejected-icon">×</div>
-
                     <div>
-
                         <p>Not Selected</p>
-
                         <h2 id="rejectedApplications">0</h2>
-
                     </div>
-
                 </div>
-
             </section>
 
             <section class="applications-section">
-
                 <div class="applications-heading">
-
                     <div>
-
                         <h2>Your Applications</h2>
-
                         <p>Keep track of your application progress.</p>
-
                     </div>
 
                     <a href="job-listings.html" class="browse-button">
-
                         + Find More Jobs
-
                     </a>
-
                 </div>
 
                 <div class="application-filters">
-
                     <button class="filter-tab active" data-filter="all">
-
                         All Applications
-
                     </button>
 
                     <button class="filter-tab" data-filter="pending">
-
                         Pending
-
                     </button>
 
                     <button class="filter-tab" data-filter="reviewed">
-
                         Reviewed
-
                     </button>
 
                     <button class="filter-tab" data-filter="interview">
-
                         Interview
-
                     </button>
 
                     <button class="filter-tab" data-filter="rejected">
-
                         Not Selected
-
                     </button>
-
                 </div>
 
-                <div class="applications-list" id="applicationsList">
-
-                    <!-- Applications will be displayed here -->
-
-                </div>
+                <div class="applications-list" id="applicationsList"></div>
 
                 <div class="empty-state" id="emptyState" hidden>
-
                     <div class="empty-icon">▤</div>
-
                     <h3>No applications yet</h3>
-
                     <p>
-
                         You haven't applied for any jobs yet.
-
                         Explore available opportunities and submit your first application.
-
                     </p>
-
                     <a href="job-listings.html" class="browse-button">
-
                         Browse Jobs
-
                     </a>
-
                 </div>
-
             </section>
-
         </main>
-
     </div>
 </body>
 </html>

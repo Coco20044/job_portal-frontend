@@ -6,7 +6,7 @@ box-sizing: border-box;
 }
 :root {
 --primary: #1759e8;
---primary-dark: #1048c7;
+--primary-dark: rgb(58, 58, 133);
 --white: #ffffff;
 --background: #eef1f7;
 --text-dark: #172033;

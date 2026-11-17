@@ -1,140 +1,293 @@
 <!DOCTYPE html>
+
 <html lang="en">
+
 <head>
+
     <meta charset="UTF-8">
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Job Seeker Dashboard | JobPortal</title>
+
     <link rel="stylesheet" href="job-seeker-dashboard.css">
+
     <script src="job-seeker-dashboard.js" defer></script>
+
 </head>
+
 <body>
+
+    <input type="checkbox" id="mobileMenuToggle" class="mobile-menu-toggle">
+
+    <header class="mobile-header">
+
+        <a href="job-seeker-dashboard.html" class="mobile-logo">
+
+            <span class="logo-icon">J</span>
+
+            <span>JobPortal</span>
+
+        </a>
+
+        <label for="mobileMenuToggle" class="mobile-menu-button" aria-label="Toggle navigation">
+
+            <span></span>
+
+            <span></span>
+
+            <span></span>
+
+        </label>
+
+    </header>
+
+    <label for="mobileMenuToggle" class="mobile-menu-overlay"></label>
+
     <div class="dashboard-container">
+
         <aside class="sidebar">
+
             <a href="job-seeker-dashboard.html" class="logo">
+
                 <span class="logo-icon">J</span>
+
                 <span>JobPortal</span>
+
             </a>
+
             <div class="sidebar-menu">
+
                 <p class="menu-heading">MENU</p>
+
                 <a href="job-seeker-dashboard.html" class="nav-link active">
+
                     <span>▦</span>
+
                     Dashboard
+
                 </a>
+
                 <a href="job-listings.html" class="nav-link">
+
                     <span>⌕</span>
+
                     Browse Jobs
+
                 </a>
+
                 <a href="my-applications.html" class="nav-link">
+
                     <span>▤</span>
+
                     My Applications
+
                 </a>
+
                 <a href="my-profile.html" class="nav-link">
+
                     <span>♙</span>
+
                     My Profile
+
                 </a>
+
             </div>
+
             <div class="sidebar-bottom">
+
                 <a href="settings.html" class="nav-link">
+
                     <span>⚙</span>
+
                     Settings
+
                 </a>
+
                 <a href="index.html" class="nav-link logout-link" id="logoutButton">
+
                     <span>↪</span>
+
                     Logout
+
                 </a>
+
             </div>
+
         </aside>
+
         <main class="main-content">
+
             <header class="top-header">
+
                 <div class="page-title">
+
                     <h1>Dashboard</h1>
+
                     <p>Here's what's happening with your job search.</p>
+
                 </div>
+
                 <div class="header-actions">
+
                     <button class="notification-button" aria-label="Notifications">
+
                         ♧
+
                         <span class="notification-dot"></span>
+
                     </button>
+
                     <div class="user-profile">
+
                         <div class="user-avatar" id="userAvatar"></div>
+
                         <div class="user-details">
+
                             <h4 id="userName">Loading...</h4>
+
                             <p>Job Seeker</p>
+
                         </div>
+
                     </div>
+
                 </div>
+
             </header>
+
             <section class="welcome-section">
+
                 <div>
+
                     <p class="welcome-label">YOUR JOB SEARCH STARTS HERE</p>
+
                     <h2>Welcome back, <span id="welcomeName">Loading...</span>!</h2>
+
                     <p>Discover opportunities and take the next step in your career.</p>
+
                 </div>
+
                 <a href="job-listings.html" class="primary-button">
+
                     Find a Job <span>→</span>
+
                 </a>
+
             </section>
+
             <section class="stats-grid">
+
                 <article class="stat-card">
+
                     <div class="stat-icon saved-icon">♡</div>
+
                     <p>Saved Jobs</p>
+
                     <h2 id="savedJobsCount">—</h2>
+
                     <span>Jobs you're interested in</span>
+
                 </article>
+
                 <article class="stat-card">
+
                     <div class="stat-icon application-icon">▤</div>
+
                     <p>Applications Sent</p>
+
                     <h2 id="applicationsCount">—</h2>
+
                     <span>Jobs you've applied for</span>
+
                 </article>
+
                 <article class="stat-card">
+
                     <div class="stat-icon interview-icon">▣</div>
+
                     <p>Interviews</p>
+
                     <h2 id="interviewsCount">—</h2>
+
                     <span>Upcoming opportunities</span>
+
                 </article>
+
             </section>
+
             <div class="dashboard-grid">
+
                 <section class="content-card recommended-section">
+
                     <div class="card-header">
+
                         <div>
+
                             <h3>Recommended Jobs</h3>
+
                             <p>Explore opportunities you might be interested in.</p>
+
                         </div>
+
                         <a href="job-listings.html">View All</a>
+
                     </div>
+
                     <div id="recommendedJobs">
+
                         Loading jobs...
+
                     </div>
+
                 </section>
+
                 <section class="content-card activity-section">
+
                     <div class="card-header">
+
                         <div>
+
                             <h3>Recent Activity</h3>
+
                             <p>Keep track of your job applications.</p>
+
                         </div>
+
                         <a href="my-applications.html">View All</a>
+
                     </div>
+
                     <div id="recentActivity">
+
                         Loading activity...
+
                     </div>
+
                 </section>
+
             </div>
+
         </main>
-    </div>
-        <div class="theme-notice" id="themeNotice">
-
-    <div class="theme-notice-icon">☀</div>
-
-    <div class="theme-notice-content">
-
-        <strong>Make it yours!</strong>
-
-        <p>You can switch between light and dark mode anytime in Settings.</p>
 
     </div>
 
-    <span class="theme-notice-close">✦</span>
+    <div class="theme-notice" id="themeNotice">
+
+        <div class="theme-notice-icon">☀</div>
+
+        <div class="theme-notice-content">
+
+            <strong>Make it yours!</strong>
+
+            <p>You can switch between light and dark mode anytime in Settings.</p>
+
+        </div>
+
+        <span class="theme-notice-close">✦</span>
+
     </div>
+
 </body>
+
 </html>

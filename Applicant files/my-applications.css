@@ -37,14 +37,23 @@ body {
     font-family: Arial, sans-serif;
     background: var(--background);
     color: var(--text-dark);
+    overflow-x: hidden;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+button {
+    font: inherit;
+    cursor: pointer;
 }
 
 .dashboard-container {
     display: flex;
     min-height: 100vh;
 }
-
-/* SIDEBAR */
 
 .sidebar {
     width: 250px;
@@ -54,6 +63,7 @@ body {
     padding: 30px 20px;
     display: flex;
     flex-direction: column;
+    flex-shrink: 0;
 }
 
 .logo {
@@ -65,6 +75,7 @@ body {
     font-size: 21px;
     font-weight: 700;
     margin-bottom: 45px;
+    white-space: nowrap;
 }
 
 .logo-icon {
@@ -77,6 +88,16 @@ body {
     align-items: center;
     justify-content: center;
     font-size: 20px;
+    flex-shrink: 0;
+}
+
+.mobile-menu-toggle,
+.menu-toggle-button {
+    display: none;
+}
+
+.mobile-menu {
+    display: contents;
 }
 
 .menu-heading {
@@ -104,10 +125,12 @@ body {
     font-weight: 500;
     border-radius: 8px;
     transition: 0.3s;
+    white-space: nowrap;
 }
 
 .nav-link span {
     font-size: 19px;
+    flex-shrink: 0;
 }
 
 .nav-link:hover,
@@ -122,8 +145,6 @@ body {
     flex-direction: column;
     gap: 8px;
 }
-
-/* MAIN CONTENT */
 
 .main-content {
     flex: 1;
@@ -147,12 +168,14 @@ body {
 .page-title p {
     color: var(--text-muted);
     font-size: 14px;
+    line-height: 1.5;
 }
 
 .header-actions {
     display: flex;
     align-items: center;
     gap: 22px;
+    flex-shrink: 0;
 }
 
 .notification-button {
@@ -165,6 +188,7 @@ body {
     border-radius: 10px;
     font-size: 20px;
     cursor: pointer;
+    flex-shrink: 0;
 }
 
 .notification-dot {
@@ -193,6 +217,7 @@ body {
     align-items: center;
     justify-content: center;
     font-weight: 700;
+    flex-shrink: 0;
 }
 
 .user-details h4 {
@@ -204,8 +229,6 @@ body {
     color: var(--text-muted);
     font-size: 12px;
 }
-
-/* APPLICATION OVERVIEW */
 
 .application-overview {
     display: grid;
@@ -222,11 +245,13 @@ body {
     display: flex;
     align-items: center;
     gap: 15px;
+    min-width: 0;
 }
 
 .overview-icon {
     width: 46px;
     height: 46px;
+    min-width: 46px;
     border-radius: 12px;
     display: flex;
     align-items: center;
@@ -265,13 +290,12 @@ body {
     font-size: 25px;
 }
 
-/* APPLICATIONS SECTION */
-
 .applications-section {
     background: var(--white);
     border: 1px solid var(--border);
     border-radius: 13px;
     padding: 27px;
+    min-width: 0;
 }
 
 .applications-heading {
@@ -290,6 +314,7 @@ body {
 .applications-heading p {
     color: var(--text-muted);
     font-size: 13px;
+    line-height: 1.5;
 }
 
 .browse-button {
@@ -304,13 +329,13 @@ body {
     font-weight: 600;
     cursor: pointer;
     transition: 0.3s;
+    white-space: nowrap;
+    text-align: center;
 }
 
 .browse-button:hover {
     background: var(--primary-dark);
 }
-
-/* FILTER TABS */
 
 .application-filters {
     display: flex;
@@ -319,6 +344,11 @@ body {
     border-bottom: 1px solid var(--border);
     margin-bottom: 20px;
     overflow-x: auto;
+    scrollbar-width: none;
+}
+
+.application-filters::-webkit-scrollbar {
+    display: none;
 }
 
 .filter-tab {
@@ -331,6 +361,7 @@ body {
     font-weight: 600;
     white-space: nowrap;
     cursor: pointer;
+    flex-shrink: 0;
 }
 
 .filter-tab:hover,
@@ -339,12 +370,11 @@ body {
     border-bottom-color: var(--primary);
 }
 
-/* APPLICATION CARDS */
-
 .applications-list {
     display: flex;
     flex-direction: column;
     gap: 15px;
+    min-width: 0;
 }
 
 .application-card {
@@ -355,6 +385,7 @@ body {
     justify-content: space-between;
     align-items: center;
     gap: 20px;
+    min-width: 0;
     transition: 0.3s;
 }
 
@@ -384,9 +415,14 @@ body {
     font-weight: 700;
 }
 
+.application-info {
+    min-width: 0;
+}
+
 .application-info h3 {
     font-size: 15px;
     margin-bottom: 6px;
+    overflow-wrap: anywhere;
 }
 
 .application-info p {
@@ -417,6 +453,7 @@ body {
     border-radius: 20px;
     font-size: 11px;
     font-weight: 600;
+    white-space: nowrap;
 }
 
 .status-pending {
@@ -443,6 +480,7 @@ body {
     display: flex;
     align-items: center;
     gap: 12px;
+    flex-wrap: wrap;
 }
 
 .application-date {
@@ -465,11 +503,13 @@ body {
     background: #fff0f0;
 }
 
-/* EMPTY STATE */
-
 .empty-state {
     text-align: center;
     padding: 55px 20px;
+}
+
+.empty-state[hidden] {
+    display: none;
 }
 
 .empty-icon {
@@ -498,7 +538,14 @@ body {
     margin: 0 auto 20px;
 }
 
-/* RESPONSIVE DESIGN */
+body,
+.sidebar,
+.overview-card,
+.applications-section,
+.application-card,
+.notification-button {
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
 
 @media (max-width: 1100px) {
     .application-overview {
@@ -510,11 +557,124 @@ body {
     }
 }
 
-@media (max-width: 800px) {
+@media (max-width: 850px) {
+    .dashboard-container {
+        flex-direction: column;
+    }
+
     .sidebar {
-        width: 220px;
-        min-width: 220px;
-        padding: 25px 15px;
+        width: 100%;
+        min-width: 0;
+        min-height: auto;
+        height: 70px;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        padding: 12px 20px;
+        position: relative;
+        z-index: 100;
+        border-right: none;
+        border-bottom: 1px solid var(--border);
+    }
+
+    .logo {
+        margin: 0;
+        padding: 0;
+    }
+
+    .mobile-menu-toggle {
+        display: none;
+    }
+
+    .menu-toggle-button {
+        display: flex;
+        width: 42px;
+        height: 42px;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 5px;
+        cursor: pointer;
+        border-radius: 9px;
+        background: var(--hover-bg);
+    }
+
+    .menu-toggle-button span {
+        width: 20px;
+        height: 2px;
+        background: var(--primary);
+        border-radius: 5px;
+        transition: 0.2s ease;
+    }
+
+    .mobile-menu {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        padding: 18px 20px;
+        background: var(--white);
+        border-bottom: 1px solid var(--border);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
+    }
+
+    .mobile-menu-toggle:checked ~ .mobile-menu {
+        display: block;
+    }
+
+    .mobile-menu-toggle:checked ~ .menu-toggle-button span:first-child {
+        transform: translateY(7px) rotate(45deg);
+    }
+
+    .mobile-menu-toggle:checked ~ .menu-toggle-button span:nth-child(2) {
+        opacity: 0;
+    }
+
+    .mobile-menu-toggle:checked ~ .menu-toggle-button span:last-child {
+        transform: translateY(-7px) rotate(-45deg);
+    }
+
+    .sidebar-menu {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+    }
+
+    .menu-heading {
+        display: block;
+        margin: 0 0 9px;
+    }
+
+    .nav-link {
+        display: flex;
+        justify-content: flex-start;
+        width: 100%;
+        padding: 13px 14px;
+        font-size: 14px;
+        white-space: normal;
+    }
+
+    .nav-link span {
+        font-size: 19px;
+    }
+
+    .sidebar-bottom {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+        margin-top: 12px;
+        padding-top: 12px;
+        border-top: 1px solid var(--border);
+    }
+
+    .sidebar-bottom .nav-link {
+        font-size: 14px;
+    }
+
+    .main-content {
+        width: 100%;
+        padding: 25px 22px;
     }
 
     .application-card {
@@ -527,77 +687,237 @@ body {
 }
 
 @media (max-width: 650px) {
-    .dashboard-container {
-        flex-direction: column;
-    }
-
-    .sidebar {
-        width: 100%;
-        min-width: 0;
-        padding: 18px;
-    }
-
-    .logo {
-        margin-bottom: 20px;
-    }
-
-    .sidebar-menu {
-        gap: 5px;
-    }
-
-    .sidebar-bottom {
-        margin-top: 15px;
-    }
-
     .main-content {
-        padding: 25px 16px;
+        padding: 22px 16px;
     }
 
     .top-header {
-        align-items: flex-start;
-        flex-direction: column;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 25px;
+    }
+
+    .page-title h1 {
+        font-size: 22px;
+    }
+
+    .page-title p {
+        font-size: 12px;
     }
 
     .header-actions {
-        width: 100%;
-        justify-content: space-between;
-    }
-
-    .application-overview {
-        grid-template-columns: 1fr 1fr;
-        gap: 12px;
-    }
-
-    .overview-card {
-        padding: 15px;
         gap: 10px;
     }
 
+    .application-overview {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px;
+        margin-bottom: 22px;
+    }
+
+    .overview-card {
+        padding: 15px 12px;
+        gap: 10px;
+    }
+
+    .overview-icon {
+        width: 38px;
+        height: 38px;
+        min-width: 38px;
+        font-size: 18px;
+    }
+
+    .overview-card p {
+        font-size: 11px;
+    }
+
     .overview-card h2 {
-        font-size: 21px;
+        font-size: 22px;
     }
 
     .applications-section {
-        padding: 18px;
+        padding: 18px 15px;
     }
 
     .applications-heading {
         align-items: flex-start;
         flex-direction: column;
+        gap: 13px;
+        margin-bottom: 18px;
+    }
+
+    .applications-heading h2 {
+        font-size: 17px;
+    }
+
+    .applications-heading p {
+        font-size: 12px;
+    }
+
+    .application-filters {
+        gap: 20px;
+    }
+
+    .filter-tab {
+        font-size: 12px;
     }
 
     .application-card {
         flex-direction: column;
+        align-items: stretch;
+        gap: 16px;
+        padding: 16px;
+    }
+
+    .application-main {
+        width: 100%;
+        gap: 12px;
+    }
+
+    .company-logo {
+        width: 42px;
+        height: 42px;
+        font-size: 17px;
+    }
+
+    .application-info h3 {
+        font-size: 14px;
     }
 
     .application-side {
         width: 100%;
         align-items: flex-start;
+        border-top: 1px solid var(--border);
+        padding-top: 13px;
+        gap: 10px;
+    }
+
+    .application-actions {
+        width: 100%;
+        justify-content: space-between;
     }
 }
 
-@media (max-width: 400px) {
+@media (max-width: 550px) {
+    .sidebar {
+        padding: 12px 16px;
+        height: 66px;
+    }
+
+    .logo {
+        font-size: 20px;
+    }
+
+    .logo-icon {
+        width: 37px;
+        height: 37px;
+    }
+
+    .menu-toggle-button {
+        width: 40px;
+        height: 40px;
+    }
+
+    .mobile-menu {
+        padding: 16px;
+    }
+
+    .main-content {
+        padding: 20px 14px;
+    }
+
+    .top-header {
+        align-items: flex-start;
+    }
+
+    .page-title h1 {
+        font-size: 20px;
+    }
+
+    .page-title p {
+        font-size: 11px;
+    }
+
+    .header-actions {
+        gap: 8px;
+    }
+
+    .notification-button {
+        width: 37px;
+        height: 37px;
+    }
+
+    .user-avatar {
+        width: 37px;
+        height: 37px;
+    }
+
+    .user-details {
+        display: none;
+    }
+
+    .application-overview {
+        gap: 10px;
+    }
+
+    .overview-card {
+        padding: 13px 10px;
+        gap: 8px;
+    }
+
+    .overview-icon {
+        width: 34px;
+        height: 34px;
+        min-width: 34px;
+        font-size: 16px;
+    }
+
+    .overview-card p {
+        font-size: 10px;
+    }
+
+    .overview-card h2 {
+        font-size: 20px;
+    }
+
+    .applications-section {
+        padding: 16px 12px;
+    }
+
+    .browse-button {
+        font-size: 12px;
+        padding: 10px 14px;
+    }
+
+    .application-card {
+        padding: 14px;
+    }
+
+    .application-meta {
+        gap: 8px;
+        font-size: 10px;
+    }
+
+    .empty-state {
+        padding: 40px 12px;
+    }
+}
+
+@media (max-width: 350px) {
     .application-overview {
         grid-template-columns: 1fr;
+    }
+
+    .overview-card {
+        padding: 14px;
+    }
+
+    .top-header {
+        flex-wrap: wrap;
+    }
+
+    .header-actions {
+        width: 100%;
+        justify-content: flex-end;
     }
 }
