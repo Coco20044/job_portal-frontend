@@ -35,7 +35,6 @@ function clearUserSession() {
     localStorage.removeItem("token");
     localStorage.removeItem("user");
     localStorage.removeItem("selectedRole");
-
     sessionStorage.removeItem("token");
     sessionStorage.removeItem("user");
     sessionStorage.removeItem("selectedRole");
@@ -60,7 +59,6 @@ async function apiRequest(endpoint, options = {}) {
         isJobSeekerAuthenticated = false;
         savedJobs = [];
         appliedJobs = [];
-
         throw new Error(data.message || "Please log in to continue.");
     }
 
@@ -136,6 +134,237 @@ function showGuestPreview() {
     }
 }
 
+function normalizeValue(value) {
+    return String(value || "")
+        .trim()
+        .toLowerCase()
+        .replace(/[_-]/g, " ")
+        .replace(/[^a-z0-9 ]/g, "")
+        .replace(/\s+/g, " ")
+        .trim();
+}
+
+function normalizeEmploymentType(value) {
+    const normalized = normalizeValue(value);
+
+    const aliases = {
+        fulltime: "full-time",
+        "full time": "full-time",
+        parttime: "part-time",
+        "part time": "part-time",
+        internship: "internship",
+        intern: "internship",
+        contract: "contract"
+    };
+
+    return aliases[normalized] || normalized;
+}
+
+function normalizeWorkLocation(value) {
+    const normalized = normalizeValue(value);
+
+    const aliases = {
+        remote: "remote",
+        onsite: "on-site",
+        "on site": "on-site",
+        office: "on-site",
+        hybrid: "hybrid"
+    };
+
+    return aliases[normalized] || normalized;
+}
+
+function normalizeExperienceLevel(value) {
+    const normalized = normalizeValue(value);
+
+    const aliases = {
+        entry: "entry-level",
+        "entry level": "entry-level",
+        entrylevel: "entry-level",
+        junior: "junior",
+        internship: "internship",
+        intern: "internship",
+        graduate: "entry-level",
+        senior: "senior",
+        mid: "mid-level",
+        "mid level": "mid-level",
+        midlevel: "mid-level"
+    };
+
+    return aliases[normalized] || normalized;
+}
+
+function parseAmount(value) {
+    if (value === null || value === undefined || value === "") {
+        return null;
+    }
+
+    const amount = Number(String(value).replace(/[^\d.-]/g, ""));
+
+    return Number.isFinite(amount) && amount > 0 ? amount : null;
+}
+
+function formatSalary(job) {
+    const minimum = parseAmount(job.salary_min ?? job.salaryMin);
+    const maximum = parseAmount(job.salary_max ?? job.salaryMax);
+    const currency = job.salary_currency || job.salaryCurrency || "NGN";
+
+    if (minimum !== null && maximum !== null) {
+        return `${currency} ${minimum.toLocaleString("en-NG")} - ${maximum.toLocaleString("en-NG")}`;
+    }
+
+    if (minimum !== null) {
+        return `From ${currency} ${minimum.toLocaleString("en-NG")}`;
+    }
+
+    if (maximum !== null) {
+        return `Up to ${currency} ${maximum.toLocaleString("en-NG")}`;
+    }
+
+    return job.salary || job.salary_range || job.salaryRange || "Salary not specified";
+}
+
+function getSalaryValue(job) {
+    return job.salaryMinimum ?? job.salaryMaximum ?? null;
+}
+
+function getJobDate(job) {
+    return job.posted_at ||
+        job.postedAt ||
+        job.date_posted ||
+        job.datePosted ||
+        job.created_at ||
+        job.createdAt ||
+        job.published_at ||
+        job.publishedAt ||
+        null;
+}
+
+function formatJobDate(dateValue) {
+    if (!dateValue) {
+        return "Date not available";
+    }
+
+    const dateString = String(dateValue);
+    const dateOnlyMatch = dateString.match(/^(\d{4})-(\d{2})-(\d{2})/);
+
+    let date;
+
+    if (dateOnlyMatch) {
+        const [, year, month, day] = dateOnlyMatch;
+        date = new Date(Number(year), Number(month) - 1, Number(day));
+    } else {
+        date = new Date(dateValue);
+    }
+
+    if (Number.isNaN(date.getTime())) {
+        return "Date not available";
+    }
+
+    return date.toLocaleDateString("en-GB", {
+        day: "numeric",
+        month: "long",
+        year: "numeric"
+    });
+}
+
+function getDateTimestamp(dateValue) {
+    if (!dateValue) return 0;
+
+    const dateString = String(dateValue);
+    const dateOnlyMatch = dateString.match(/^(\d{4})-(\d{2})-(\d{2})/);
+
+    if (dateOnlyMatch) {
+        const [, year, month, day] = dateOnlyMatch;
+        return new Date(
+            Number(year),
+            Number(month) - 1,
+            Number(day)
+        ).getTime();
+    }
+
+    const timestamp = new Date(dateValue).getTime();
+    return Number.isNaN(timestamp) ? 0 : timestamp;
+}
+
+function parseSkills(value) {
+    if (Array.isArray(value)) {
+        return value.map(skill => String(skill).trim()).filter(Boolean);
+    }
+
+    if (typeof value !== "string" || !value.trim()) {
+        return [];
+    }
+
+    try {
+        const parsed = JSON.parse(value);
+
+        if (Array.isArray(parsed)) {
+            return parsed.map(skill => String(skill).trim()).filter(Boolean);
+        }
+    } catch (error) {
+        return value.split(/[,;|]/).map(skill => skill.trim()).filter(Boolean);
+    }
+
+    return value.split(/[,;|]/).map(skill => skill.trim()).filter(Boolean);
+}
+
+function prepareJob(job) {
+    const location = job.location || job.job_location || "Not specified";
+
+    const rawWorkLocation =
+        job.work_location ||
+        job.workLocation ||
+        job.work_mode ||
+        job.workMode ||
+        (/remote/i.test(location) ? "Remote" : "");
+
+    const rawExperience =
+        job.experience_level ||
+        job.experienceLevel ||
+        job.experience ||
+        "";
+
+    const rawEmployment =
+        job.employment_type ||
+        job.employmentType ||
+        job.job_type ||
+        job.jobType ||
+        "";
+
+    const date = getJobDate(job);
+    const salaryMinimum = parseAmount(job.salary_min ?? job.salaryMin);
+    const salaryMaximum = parseAmount(job.salary_max ?? job.salaryMax);
+
+    return {
+        id: job.id,
+        title: job.title || "Untitled Job",
+        company: job.company_name || job.companyName || job.company || "Company",
+        location,
+        normalizedLocation: normalizeValue(location),
+        workLocation: rawWorkLocation
+            ? normalizeWorkLocation(rawWorkLocation)
+            : "not specified",
+        employmentType: rawEmployment
+            ? normalizeEmploymentType(rawEmployment)
+            : "not specified",
+        experienceLevel: rawExperience
+            ? normalizeExperienceLevel(rawExperience)
+            : "",
+        salary: formatSalary(job),
+        salaryMinimum,
+        salaryMaximum,
+        description: job.description || "",
+        skills: parseSkills(
+            job.required_skills ??
+            job.requiredSkills ??
+            job.skills
+        ),
+        date,
+        posted: formatJobDate(date)
+    };
+}
+
 async function fetchJobs() {
     const data = await apiRequest("/jobs");
 
@@ -143,42 +372,7 @@ async function fetchJobs() {
         ? data
         : data.jobs || data.data || [];
 
-    jobs = jobData.map(job => {
-        let skills = [];
-
-        if (Array.isArray(job.required_skills)) {
-            skills = job.required_skills;
-        } else if (typeof job.required_skills === "string") {
-            try {
-                const parsed = JSON.parse(job.required_skills);
-                skills = Array.isArray(parsed)
-                    ? parsed
-                    : job.required_skills.split(",");
-            } catch {
-                skills = job.required_skills.split(",");
-            }
-        }
-
-        skills = skills.map(skill => String(skill).trim()).filter(Boolean);
-
-        const location = job.location || "Not specified";
-        const workLocation = job.work_location ||
-            (/remote/i.test(location) ? "Remote" : "Not specified");
-
-        return {
-            id: job.id,
-            title: job.title || "Untitled Job",
-            company: job.company_name || "Company",
-            location,
-            workLocation,
-            employmentType: job.employment_type || "Not specified",
-            experienceLevel: job.experience_level || "Not specified",
-            salary: formatSalary(job),
-            description: job.description || "",
-            skills,
-            posted: getRelativeDate(job.posted_at)
-        };
-    });
+    jobs = jobData.map(prepareJob);
 }
 
 async function fetchSavedJobs() {
@@ -196,63 +390,41 @@ async function fetchApplications() {
         : data.applications || data.data || [];
 }
 
-function formatSalary(job) {
-    const minimum = Number(job.salary_min);
-    const maximum = Number(job.salary_max);
-    const currency = job.salary_currency || "NGN";
-
-    if (!job.salary_min && !job.salary_max) {
-        return "Salary not specified";
-    }
-
-    const formatAmount = amount => Number(amount).toLocaleString("en-NG");
-
-    if (job.salary_min && job.salary_max) {
-        return `${currency} ${formatAmount(minimum)} - ${formatAmount(maximum)}`;
-    }
-
-    if (job.salary_min) {
-        return `From ${currency} ${formatAmount(minimum)}`;
-    }
-
-    return `Up to ${currency} ${formatAmount(maximum)}`;
-}
-
-function getRelativeDate(date) {
-    if (!date) return "Recently posted";
-
-    const timestamp = new Date(date).getTime();
-
-    if (Number.isNaN(timestamp)) return "Recently posted";
-
-    const difference = Date.now() - timestamp;
-    const minutes = Math.floor(difference / 60000);
-    const hours = Math.floor(minutes / 60);
-    const days = Math.floor(hours / 24);
-
-    if (minutes < 1) return "Just now";
-    if (minutes < 60) return `${minutes} minutes ago`;
-    if (hours < 24) return `${hours} hours ago`;
-    if (days === 1) return "Yesterday";
-    if (days < 7) return `${days} days ago`;
-
-    return new Date(date).toLocaleDateString();
-}
-
 function getCheckedValues(name) {
     return Array.from(
         document.querySelectorAll(`input[name="${name}"]:checked`)
-    ).map(checkbox => checkbox.value);
+    ).map(checkbox => normalizeValue(checkbox.value));
 }
 
-function getMinimumSalary(salary) {
-    if (!salary) return 0;
+function matchesExperience(job, selectedLevels) {
+    if (selectedLevels.length === 0) {
+        return true;
+    }
 
-    const numbers = String(salary).match(/[\d,]+/g);
+    return selectedLevels.some(level => {
+        if (level === "internship") {
+            return job.experienceLevel === "internship" ||
+                job.employmentType === "internship";
+        }
 
-    if (!numbers || !numbers.length) return 0;
+        if (level === "junior") {
+            if (job.experienceLevel) {
+                return job.experienceLevel === "junior";
+            }
 
-    return Number(numbers[0].replace(/,/g, ""));
+            return /\bjunior\b/i.test(job.title);
+        }
+
+        if (level === "entry level") {
+            if (job.experienceLevel) {
+                return job.experienceLevel === "entry-level";
+            }
+
+            return /\b(entry.level|graduate|junior)\b/i.test(job.title);
+        }
+
+        return normalizeValue(job.experienceLevel) === level;
+    });
 }
 
 function filterJobs() {
@@ -261,60 +433,71 @@ function filterJobs() {
     const employmentTypes = getCheckedValues("employmentType");
     const workLocations = getCheckedValues("workLocation");
     const experienceLevels = getCheckedValues("experienceLevel");
-    const selectedSalary = document.getElementById("salaryFilter")?.value || "";
+    const selectedSalary = Number(
+        document.getElementById("salaryFilter")?.value || 0
+    );
 
     let filteredJobs = jobs.filter(job => {
+        const keyword = normalizeValue(currentKeyword);
+        const locationSearch = normalizeValue(currentLocation);
+
+        const searchableText = normalizeValue([
+            job.title,
+            job.company,
+            job.description,
+            ...job.skills
+        ].join(" "));
+
         const keywordMatch =
-            !currentKeyword ||
-            job.title.toLowerCase().includes(currentKeyword) ||
-            job.company.toLowerCase().includes(currentKeyword) ||
-            job.description.toLowerCase().includes(currentKeyword) ||
-            job.skills.some(skill => skill.toLowerCase().includes(currentKeyword));
+            !keyword || searchableText.includes(keyword);
 
         const locationMatch =
-            !currentLocation ||
-            job.location.toLowerCase().includes(currentLocation) ||
-            job.workLocation.toLowerCase().includes(currentLocation);
+            !locationSearch ||
+            job.normalizedLocation.includes(locationSearch) ||
+            normalizeValue(job.workLocation).includes(locationSearch);
 
         const employmentMatch =
             employmentTypes.length === 0 ||
-            employmentTypes.includes(job.employmentType);
+            employmentTypes.includes(normalizeValue(job.employmentType));
 
         const workLocationMatch =
             workLocations.length === 0 ||
-            workLocations.includes(job.workLocation);
+            workLocations.includes(normalizeValue(job.workLocation));
 
         const experienceMatch =
-            experienceLevels.length === 0 ||
-            experienceLevels.includes(job.experienceLevel);
+            matchesExperience(job, experienceLevels);
+
+        const salaryValue = getSalaryValue(job);
 
         const salaryMatch =
             !selectedSalary ||
-            getMinimumSalary(job.salary) >= Number(selectedSalary);
+            (salaryValue !== null && salaryValue >= selectedSalary);
 
-        return (
-            keywordMatch &&
+        return keywordMatch &&
             locationMatch &&
             employmentMatch &&
             workLocationMatch &&
             experienceMatch &&
-            salaryMatch
-        );
+            salaryMatch;
     });
 
     const sortValue = sortJobs?.value || "newest";
 
-    if (sortValue === "oldest") {
-        filteredJobs.reverse();
-    }
-
-    if (sortValue === "title") {
-        filteredJobs.sort((a, b) => a.title.localeCompare(b.title));
-    }
-
-    if (sortValue === "salary") {
+    if (sortValue === "newest") {
         filteredJobs.sort(
-            (a, b) => getMinimumSalary(b.salary) - getMinimumSalary(a.salary)
+            (a, b) => getDateTimestamp(b.date) - getDateTimestamp(a.date)
+        );
+    } else if (sortValue === "oldest") {
+        filteredJobs.sort(
+            (a, b) => getDateTimestamp(a.date) - getDateTimestamp(b.date)
+        );
+    } else if (sortValue === "salary-high") {
+        filteredJobs.sort(
+            (a, b) => (getSalaryValue(b) ?? -1) - (getSalaryValue(a) ?? -1)
+        );
+    } else if (sortValue === "salary-low") {
+        filteredJobs.sort(
+            (a, b) => (getSalaryValue(a) ?? Infinity) - (getSalaryValue(b) ?? Infinity)
         );
     }
 
@@ -355,6 +538,7 @@ function renderJobs(jobData) {
         header.className = "job-card-header";
 
         const jobHeading = document.createElement("div");
+        jobHeading.className = "job-title-info";
 
         const title = document.createElement("h3");
         title.textContent = job.title;
@@ -366,7 +550,7 @@ function renderJobs(jobData) {
         jobHeading.append(title, company);
 
         const saveButton = document.createElement("button");
-        saveButton.className = `save-button ${isSaved ? "saved" : ""}`;
+        saveButton.className = `save-job ${isSaved ? "saved" : ""}`;
         saveButton.dataset.action = "save";
         saveButton.dataset.id = job.id;
         saveButton.type = "button";
@@ -375,19 +559,35 @@ function renderJobs(jobData) {
         header.append(jobHeading, saveButton);
 
         const meta = document.createElement("div");
-        meta.className = "job-meta";
+        meta.className = "job-details";
 
-        [
+        const metaValues = [
             job.location,
-            job.employmentType,
-            job.workLocation,
+            job.employmentType === "not specified"
+                ? ""
+                : job.employmentType,
+            job.workLocation === "not specified"
+                ? ""
+                : job.workLocation,
             job.experienceLevel
-        ].forEach(value => {
-            if (value === "Not specified") return;
+        ];
+
+        const displayedMeta = new Set();
+
+        metaValues.forEach(value => {
+            if (!value || value === "Not specified") return;
+
+            const normalized = normalizeValue(value);
+
+            if (displayedMeta.has(normalized)) return;
+
+            displayedMeta.add(normalized);
 
             const span = document.createElement("span");
-            span.textContent = value;
-            meta.append(span);
+            span.textContent = String(value)
+                .replace(/\b\w/g, character => character.toUpperCase());
+
+            meta.appendChild(span);
         });
 
         const description = document.createElement("p");
@@ -407,17 +607,22 @@ function renderJobs(jobData) {
         footer.className = "job-card-footer";
 
         const salaryInfo = document.createElement("div");
+        salaryInfo.className = "job-salary-info";
 
         const salary = document.createElement("strong");
+        salary.className = "job-salary";
         salary.textContent = job.salary;
 
         const posted = document.createElement("small");
-        posted.textContent = job.posted;
+        posted.className = "job-posted-date";
+        posted.textContent = `Posted: ${job.posted}`;
 
         salaryInfo.append(salary, posted);
 
         const applyButton = document.createElement("button");
-        applyButton.className = "apply-button";
+        applyButton.className = hasApplied
+            ? "apply-button applied-button"
+            : "apply-button";
         applyButton.dataset.action = "apply";
         applyButton.dataset.id = job.id;
         applyButton.type = "button";
@@ -426,7 +631,14 @@ function renderJobs(jobData) {
 
         footer.append(salaryInfo, applyButton);
 
-        jobCard.append(header, meta, description, skillsContainer, footer);
+        jobCard.append(
+            header,
+            meta,
+            description,
+            skillsContainer,
+            footer
+        );
+
         jobsList.appendChild(jobCard);
     });
 }
@@ -526,36 +738,6 @@ async function handleJobAction(event) {
     }
 }
 
-jobsList?.addEventListener("click", handleJobAction);
-
-jobSearchForm?.addEventListener("submit", event => {
-    event.preventDefault();
-
-    currentKeyword = searchKeyword?.value.trim().toLowerCase() || "";
-    currentLocation = searchLocation?.value.trim().toLowerCase() || "";
-
-    filterJobs();
-});
-
-applyFiltersButton?.addEventListener("click", filterJobs);
-sortJobs?.addEventListener("change", filterJobs);
-
-clearFiltersButton?.addEventListener("click", () => {
-    document.querySelectorAll(
-        'input[name="employmentType"], input[name="workLocation"], input[name="experienceLevel"]'
-    ).forEach(checkbox => {
-        checkbox.checked = false;
-    });
-
-    const salaryFilter = document.getElementById("salaryFilter");
-
-    if (salaryFilter) {
-        salaryFilter.value = "";
-    }
-
-    filterJobs();
-});
-
 function resetAllFilters() {
     jobSearchForm?.reset();
 
@@ -575,6 +757,21 @@ function resetAllFilters() {
     filterJobs();
 }
 
+jobsList?.addEventListener("click", handleJobAction);
+
+jobSearchForm?.addEventListener("submit", event => {
+    event.preventDefault();
+
+    currentKeyword = searchKeyword?.value.trim() || "";
+    currentLocation = searchLocation?.value.trim() || "";
+
+    filterJobs();
+});
+
+applyFiltersButton?.addEventListener("click", filterJobs);
+sortJobs?.addEventListener("change", filterJobs);
+
+clearFiltersButton?.addEventListener("click", resetAllFilters);
 resetSearchButton?.addEventListener("click", resetAllFilters);
 
 logoutButton?.addEventListener("click", event => {

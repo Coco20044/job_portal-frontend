@@ -416,13 +416,38 @@ function showThemeNotice() {
 
     if (!notice) return;
 
+    let startY = 0;
+    let noticeTimeout;
+
+    const dismissNotice = () => {
+        notice.classList.remove("show");
+        clearTimeout(noticeTimeout);
+    };
+
+    notice.addEventListener("touchstart", event => {
+        startY = event.changedTouches[0].clientY;
+    }, { passive: true });
+
+    notice.addEventListener("touchend", event => {
+        const endY = event.changedTouches[0].clientY;
+        const swipeDistance = startY - endY;
+
+        if (swipeDistance > 40) {
+            dismissNotice();
+        }
+    }, { passive: true });
+
+    const closeButton = notice.querySelector(".theme-notice-close");
+
+    if (closeButton) {
+        closeButton.addEventListener("click", dismissNotice);
+    }
+
     requestAnimationFrame(() => {
         notice.classList.add("show");
     });
 
-    setTimeout(() => {
-        notice.classList.remove("show");
-    }, 6000);
+    noticeTimeout = setTimeout(dismissNotice, 6000);
 }
 
 showThemeNotice();
